@@ -47,3 +47,30 @@ print(result_3)
 conn.commit()
 cursor.close()
 conn.close()
+
+# Practice 
+name = input('Enter your name ... ')
+age = int(input('How old are you ... '))
+conn = psycopg2.connect('dbname=test user=az')
+cur = conn.cursor()
+cur.execute('DROP TABLE IF EXISTS test;')
+cur.execute('''CREATE TABLE test(
+               id INTEGER PRIMARY KEY,
+               name VARCHAR
+              );
+''')
+cur.execute('''INSERT INTO test
+               (id, name)
+               VALUES(%s, %s);''', (age, name)
+)
+
+cur.execute("SELECT * FROM test;")
+result_4 = cur.fetchall()
+for x in result_4:
+  print(x)
+
+
+
+conn.commit()
+cur.close()
+conn.close()
